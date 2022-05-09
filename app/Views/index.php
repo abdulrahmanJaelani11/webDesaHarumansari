@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Startup - Startup Website Template</title>
+    <title>Desa Harumansari</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -44,9 +44,9 @@
         <div class="row gx-0">
             <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
+                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>Jl. Ciharuman</small>
                     <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
+                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>harumansari@gmail.com</small>
                 </div>
             </div>
             <div class="col-lg-4 text-center text-lg-end">
@@ -66,7 +66,7 @@
     <!-- Navbar & Carousel Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand p-0">
+            <a href="#header-carousel" class="navbar-brand p-0">
                 <h1 class="m-0"><i class="fa fa-home me-2"></i>Harumansari</h1>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -74,8 +74,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="#header-carousel" class="nav-item nav-link active">Beranda</a>
+                    <a href="#about" class="nav-item nav-link">Tentang kami</a>
                     <a href="service.html" class="nav-item nav-link">Services</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Blog</a>
@@ -94,34 +94,32 @@
                             <a href="quote.html" class="dropdown-item">Free Quote</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="<?= base_url('berita'); ?>" class="nav-item nav-link">Berita</a>
                 </div>
                 <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
-                <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">Kelola</a>
+                <a href="<?= base_url("login"); ?>" class="btn btn-primary py-2 px-4 ms-3">Kelola</a>
             </div>
         </nav>
 
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="<?= base_url("assets"); ?>/img/carousel-1.jpg" alt="Image">
+                    <img class="w-100" src="<?= base_url("assets"); ?>/img/alam-3.jpg" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
-                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
-                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">Creative & Innovative Digital Solution</h1>
-                            <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Free Quote</a>
-                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
+                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">Desa Harumansari</h1>
+                            <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"><i class="fas fa-envelope"></i> Email</a>
+                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="<?= base_url("assets"); ?>/img/carousel-2.jpg" alt="Image">
+                    <img class="w-100" src="<?= base_url("assets"); ?>/img/alam-1.jpg" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
-                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
-                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">Creative & Innovative Digital Solution</h1>
-                            <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Free Quote</a>
-                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
+                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">Hubungi Kami</h1>
+                            <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"><i class="fas fa-envelope"></i> Email</a>
+                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -202,12 +200,12 @@
 
 
     <!-- About Start -->
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" id="about">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-7">
                     <div class="section-title position-relative pb-3 mb-5">
-                        <h5 class="fw-bold text-primary text-uppercase">About Us</h5>
+                        <h5 class="fw-bold text-primary text-uppercase">Tentang Kami</h5>
                         <h1 class="mb-0">The Best IT Solution With 10 Years of Experience</h1>
                     </div>
                     <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor eirmod magna dolore erat amet</p>
