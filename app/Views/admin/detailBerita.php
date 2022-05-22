@@ -2,7 +2,7 @@
 
 <?= $this->section('content'); ?>
 <button type="submit" name="hapusBerita" class="btn btn-sm btn-danger btnHapus"><i class="fa fa-fw fa-trash"></i> Hapus Berita </button>
-<div class="row  mt-2">
+<div class="row  mt-2" style="margin-bottom: 10%;">
     <div class="col-md-7 text-gray-900">
         <div class="rinciBerita"></div>
     </div>

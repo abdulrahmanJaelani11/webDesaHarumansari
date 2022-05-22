@@ -3,7 +3,7 @@
 <?= $this->section('content'); ?>
 <div class="row">
     <div class="col">
-        <div class="card shadow">
+        <div class="card shadow" style="margin-bottom: 15%;">
             <div class="card-header">
                 <h3>Buat Berita</h3>
             </div>

@@ -3,30 +3,46 @@
 namespace App\Controllers;
 
 use App\Models\BeritaModel;
+use App\Models\dataDesaModel;
+use App\Models\JnsLayananModel;
 use App\Models\KategoriModel;
 use App\Models\KomentarModel;
+use App\Models\ProfilDesa;
 
 class Home extends BaseController
 {
     protected $kategori;
     protected $BeritaModel;
+    protected $profilDesa;
+    protected $dataDesa;
     protected $KomentarModel;
     public function __construct()
     {
         $this->kategori = new KategoriModel();
         $this->BeritaModel = new BeritaModel();
+        $this->profilDesa = new ProfilDesa();
+        $this->dataDesa = new dataDesaModel();
         $this->KomentarModel = new KomentarModel();
     }
 
     public function index()
     {
-        return view('index');
+        $data = [
+            'title' => "Berita",
+            'berita' => $this->BeritaModel->db->query("SELECT * FROM berita ORDER BY berita.id ASC LIMIT 10")->getResultArray(),
+            'beritaBaru' => $this->BeritaModel->db->query("SELECT * FROM berita ORDER BY berita.id DESC LIMIT 3")->getResultArray(),
+            'kategori' => $this->kategori->semua(),
+            'dataDesa' => $this->profilDesa->db->query("SELECT * FROM desa")->getRowArray(),
+            'dataDesa2' => $this->dataDesa->db->query("SELECT * FROM data_desa LIMIT 3")->getResultArray()
+        ];
+        // dd($data['dataDesa2']);
+        return view('index', $data);
     }
 
     public function login($data = null)
     {
         $data = [
-            'title' => "Harumansari"
+            'title' => "Login"
         ];
         return view("login", $data);
     }
@@ -83,5 +99,34 @@ class Home extends BaseController
 
         echo json_encode(view("komentar", $data));
         // echo json_encode($data);
+    }
+
+    public function layanan($data = null)
+    {
+        $data = [
+            'title' => "Layanan Online",
+        ];
+
+        return view('layanan', $data);
+    }
+
+    public function formSktm($data = null)
+    {
+        $data = [
+            'title' => "Form Pendaftaran SKTM",
+        ];
+
+        return view("formSktm", $data);
+    }
+
+    public function dataDesa()
+    {
+        $dataDesa = new dataDesaModel();
+        $data = [
+            'title' => "Data Desa",
+            'dataDesa' => $dataDesa->findAll()
+        ];
+
+        return view("dataDesa", $data);
     }
 }

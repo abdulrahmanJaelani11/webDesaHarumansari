@@ -4,20 +4,28 @@ namespace App\Controllers;
 
 use App\Models\AdminModel;
 use App\Models\BeritaModel;
+use App\Models\dataDesaModel;
 use App\Models\KomentarModel;
-use CodeIgniter\CodeIgniter;
+use App\Models\PendaftarSktm;
+use App\Models\ProfilDesa;
 
 class Proses extends BaseController
 {
     protected $validasi;
     protected $AdminModel;
     protected $BeritaModel;
+    protected $profilDesa;
+    protected $dataDesa;
+    protected $pendaftarSktm;
     protected $KomentarModel;
     public function __construct()
     {
         $this->validasi = \Config\Services::validation();
         $this->AdminModel = new AdminModel();
         $this->BeritaModel = new BeritaModel();
+        $this->profilDesa = new ProfilDesa();
+        $this->dataDesa = new dataDesaModel();
+        $this->pendaftarSktm = new PendaftarSktm();
         $this->KomentarModel = new KomentarModel();
     }
 
@@ -234,5 +242,224 @@ class Proses extends BaseController
         ];
 
         echo json_encode(view("getCariBerita", $data));
+    }
+
+    public function pendaftaranSktm($data = null)
+    {
+        $data = $this->request->getVar();
+        $nik = $data['nik'];
+
+        $dataPendaftar = $this->pendaftarSktm->db->query("SELECT * FROM pendaftar_sktm WHERE nik = $nik AND status_surat = 'proses'");
+        // echo $dataPendaftar->getNumRows();
+        // die;
+
+        if (!$this->validate([
+            'nik' => [
+                'rules' => "required|numeric|max_length[16]|min_length[16]",
+                'errors' => [
+                    'required' => "Maaf Judul harus di isi",
+                    'numeric' => "Maaf Sepertinya anda salah memasukan nik",
+                    'max_length' => "Maaf Sepertinya anda salah memasukan nik, Nik Harus Berjumlah 16 angka",
+                    'min_length' => "Maaf Sepertinya anda salah memasukan nik, Nik Harus Berjumlah 16 angka",
+                ]
+            ],
+            'tlp' => [
+                'rules' => "required|max_length[14]",
+                'errors' => [
+                    'required' => "Maaf Telepon Tidak Boleh Kosong",
+                    'max_length' => "Maaf Sepertinya No yang anda masukan salah, Silahkan cek kembali"
+                ]
+            ]
+        ])) {
+            $pesan = [
+                'errors' => [
+                    "nik" => $this->validasi->getError('nik'),
+                    "tlp" => $this->validasi->getError('tlp'),
+                ]
+            ];
+
+            echo json_encode($pesan);
+        } else {
+
+            if ($dataPendaftar->getNumRows() > 0) {
+                $pesan = [
+                    'errors' => [
+                        "nik" => "Maaf Anda Sudah Mendaftar, Surat Anda Sedang Di Proses Mohon Di Tunggu"
+                    ]
+                ];
+
+                echo json_encode($pesan);
+            } else {
+
+                if (substr($data['nik'], 0, 4) != 3205) {
+                    $pesan = [
+                        'errors' => [
+                            "nik" => "Maaf Sepertinya yang anda masukan bukan nik, Silahkan Coba Lagi"
+                        ]
+                    ];
+
+                    echo json_encode($pesan);
+                } else {
+                    if (substr($data['tlp'], 0, 4) != '+628') {
+                        $pesan = [
+                            'errors' => [
+                                "tlp" => "Maaf format telepon harus +62, contoh +6281234567890"
+                            ]
+                        ];
+
+                        echo json_encode($pesan);
+                    } else {
+
+                        $this->pendaftarSktm->save([
+                            'nama' => $data['nama'],
+                            'nik' => $data['nik'],
+                            'jk' => $data['jk'],
+                            'ttl' => $data['ttl'],
+                            'agama' => $data['agama'],
+                            'status' => $data['status'],
+                            'pendidikan' => $data['pendidikan'],
+                            'status_kawin' => $data['statusKawin'],
+                            'alamat' => $data['alamat'],
+                            'status_surat' => 'proses',
+                            'tlp' => $data['tlp'],
+                            'kepentingan' => $data['kepentingan']
+                        ]);
+
+                        $pesan = [
+                            'sukses' => "Berhasil Mendaftar"
+                        ];
+
+                        echo json_encode($pesan);
+                    }
+                }
+            }
+        }
+    }
+
+    public function logout($data = null)
+    {
+        session()->remove('login');
+        session()->remove('username');
+        session()->remove('email');
+
+        return redirect()->to(base_url(""));
+    }
+
+    public function cekSurat($data = null)
+    {
+        $nik = $this->request->getPost('nik');
+
+        $data = $this->pendaftarSktm->db->query("SELECT * FROM pendaftar_sktm WHERE nik = $nik");
+        // $data = $this->pendaftarSktm->where('nik', $nik)->get();
+
+        if ($data->getNumRows() > 0) {
+            $data = $data->getRowArray();
+            $data = [
+                'status' => 200,
+                'data' => $data
+            ];
+
+            echo json_encode($data);
+        } else {
+            $data = [
+                'status' => 400,
+                'data' => null
+            ];
+
+            echo json_encode($data);
+        }
+    }
+
+    public function setProfilDesa($data = null)
+    {
+        $data = $this->request->getVar();
+
+        $this->profilDesa->save([
+            'nama_desa' => htmlspecialchars($data['nama_desa']),
+            'provinsi' => htmlspecialchars($data['provinsi']),
+            'kabupaten' => htmlspecialchars($data['kabupaten']),
+            'kecamatan' => htmlspecialchars($data['kecamatan']),
+            'email' => htmlspecialchars($data['email']),
+            'tlp' => htmlspecialchars($data['telepon']),
+            'kode_pos' => htmlspecialchars($data['kode_pos']),
+            'alamat' => htmlspecialchars($data['alamat']),
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Berhasil Melengkapi Profil Desa"
+        ];
+
+        echo json_encode($pesan);
+    }
+
+    public function editProfilDesa($data = null)
+    {
+        $data = $this->request->getVar();
+        // echo json_encode($data);
+        // die;
+
+        $this->profilDesa->update($data['id'], [
+            'nama_desa' => htmlspecialchars($data['nama_desa']),
+            'provinsi' => htmlspecialchars($data['provinsi']),
+            'kabupaten' => htmlspecialchars($data['kabupaten']),
+            'kecamatan' => htmlspecialchars($data['kecamatan']),
+            'email' => htmlspecialchars($data['email']),
+            'tlp' => htmlspecialchars($data['telepon']),
+            'kode_pos' => htmlspecialchars($data['kode_pos']),
+            'alamat' => htmlspecialchars($data['alamat']),
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Berhasil Mengubah Profil Desa"
+        ];
+
+        echo json_encode($pesan);
+    }
+
+    public function simpanDataDesa()
+    {
+        $data = $this->request->getVar();
+
+        $this->dataDesa->save([
+            'atribut' => $data['data'],
+            'jumlah' => $data['jumlah']
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Berhasil Menambahkan Data Desa"
+        ];
+
+        echo json_encode($pesan);
+    }
+
+    public function getDataDesa()
+    {
+        $data = $this->dataDesa->db->query("SELECT * FROM data_desa")->getResultArray();
+        foreach ($data as $row) {
+            $atribut[] = $row['atribut'];
+        }
+        foreach ($data as $row) {
+            $jumlah[] = $row['jumlah'];
+        }
+
+        $dataArray = [
+            'atribut' => $atribut,
+            'jumlah' => $jumlah
+        ];
+
+        // {
+        //     atribut : ['dadsada', 'dasdadad', 'adsadadad', 'dasdadad'],
+        //     jumlah : ['asdadad', 'adsadadad', 'dasdadad', 'dasdadadad']
+        // }
+        // var_dump($data);
+
+        // $data = [
+        //     'dataDesa' => 
+        // ];
+
+        echo json_encode($dataArray);
     }
 }

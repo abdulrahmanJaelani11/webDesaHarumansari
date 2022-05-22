@@ -30,7 +30,7 @@ class Berita extends Migration
                 'constraint' => 50
             ],
             'tanggal' => [
-                'type' => "DATE",
+                'type' => "VARCHAR",
             ],
             'img' => [
                 'type' => "VARCHAR",

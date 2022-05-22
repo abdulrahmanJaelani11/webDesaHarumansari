@@ -18,6 +18,14 @@
     <!-- Custom styles for this template-->
     <link href="<?= base_url("assetsAdmin"); ?>/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <link href="<?= base_url("assetsAdmin"); ?>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        #lokasi {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -26,12 +34,12 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="display: none; z-index: 10;">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url("beranda"); ?>">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-home"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Harumansari</div>
             </a>
@@ -56,28 +64,45 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Management Berita</span>
+                <a class="nav-link" href="<?= base_url("data-desa"); ?>">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Data Desa</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#statistik_desa" aria-expanded="true" aria-controls="statistik_desa">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Statistk Desa</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="statistik_desa" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?= base_url("buat-berita"); ?>">Buat Berita</a>
-                        <a class="collapse-item" href="<?= base_url("data-berita"); ?>">Lihat Berita</a>
+                        <a class="collapse-item" href="<?= base_url("data-desa"); ?>">Data Desa</a>
+                        <a class="collapse-item" href="<?= base_url("buat-berita"); ?>">Sta</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#berita" aria-expanded="true" aria-controls="berita">
                     <i class="fas fa-fw fa-users"></i>
-                    <span>Management Users</span>
+                    <span>Menejemen Berita</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div id="berita" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Tambah Staf</a>
-                        <a class="collapse-item" href="utilities-border.html">Lihat Staf</a>
+                        <a class="collapse-item" href="<?= base_url("data-berita"); ?>">Lihat Berita</a>
+                        <a class="collapse-item" href="<?= base_url("buat-berita"); ?>">Buat Berita</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pendaftar" aria-expanded="true" aria-controls="pendaftar">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Pendaftar</span>
+                </a>
+                <div id="pendaftar" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?= base_url("pendaftar-sktm"); ?>">SKTM</a>
                     </div>
                 </div>
             </li>
@@ -90,8 +115,26 @@
                 Addons
             </div>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#setProfil" aria-expanded="true" aria-controls="setProfil">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Pengaturan</span>
+                </a>
+                <div id="setProfil" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?= base_url("lengkapi-profil-desa"); ?>">Lengkapi Profil Desa</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
+            <li class="nav-item">
+                <a class="nav-link logout" href="<?= base_url("data-desa"); ?>">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Log out</span></a>
+            </li>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -102,7 +145,7 @@
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column" style="height: 100vh;">
 
             <!-- Main Content -->
             <div id="content">
@@ -111,8 +154,8 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
+                    <button id="sideBar" onclick="showSidebar()" class="btn rounded-circle mr-3" style="color: #090979;">
+                        <i id="iconBar" class="fa fa-bars"></i>
                     </button>
 
                     <!-- Topbar Search -->
@@ -155,7 +198,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= session('email'); ?></span>
                                 <img class="img-profile rounded-circle" src="<?= base_url("assetsAdmin"); ?>/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -173,7 +216,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item logout" href="#" id="logout">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -198,7 +241,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-light fixed-bottom" style="z-index: 1;">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Abdurahman Jaelani <?= date("Y"); ?></span>
@@ -252,6 +295,39 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url("assetsAdmin"); ?>/js/sb-admin-2.min.js"></script>
+
+    <script src="<?= base_url("assetsAdmin"); ?>/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url("assetsAdmin"); ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="<?= base_url("assetsAdmin"); ?>/js/demo/datatables-demo.js"></script>
+
+    <script>
+        function showSidebar() {
+            $("#accordionSidebar").fadeToggle(200)
+        }
+        $(document).ready(function() {
+            $(".logout").click(function(e) {
+                e.preventDefault()
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Yakin?',
+                    text: "Yakin untuk Logout?",
+                    showDenyButton: false,
+                    showCancelButton: true,
+                    confirmButtonText: 'Yakin',
+                    denyButtonText: `Don't save`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        window.location = "<?= base_url("Proses/logout"); ?>"
+                    } else if (result.isDenied) {
+                        Swal.fire('Changes are not saved', '', 'info')
+                    }
+                })
+            })
+        })
+    </script>
 
 </body>
 

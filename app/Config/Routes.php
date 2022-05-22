@@ -34,15 +34,26 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 $routes->get('/login', 'Home::login');
 $routes->get('/berita', 'Home::berita');
+$routes->get('/layanan', 'Home::layanan');
 $routes->get('/berita/(:num)', 'Home::beritaKategori/$1');
 $routes->get('/detail/(:num)', 'Home::detail/$1');
+$routes->get('/form-sktm', 'Home::formSktm');
+$routes->get('/statistik-data-desa', 'Home::dataDesa');
 
 
 
 $routes->get('/data-berita', 'Admin::dataBerita');
+$routes->get('/data-desa', 'Admin::dataDesa');
 $routes->get('/beranda', 'Admin::index');
 $routes->get('/buat-berita', 'Admin::buatBerita');
 $routes->get('/detailBerita/(:num)', 'Admin::detailBerita/$1');
+$routes->get('/daftar-layanan', 'Admin::dataLayanan');
+$routes->get('/tambah-layanan', 'Admin::tambahLayanan');
+$routes->get('/pendaftar-sktm', 'Admin::pendaftarSktm');
+$routes->get('/pendaftar-sktm/(:num)', 'Admin::detailPendaftarSktm/$1');
+$routes->get('/print-surat/(:num)', 'Admin::printSurat/$1');
+$routes->get('/lengkapi-profil-desa', 'Admin::setProfilDesa');
+$routes->get('/lengkapi-data-desa', 'Admin::setDataDesa');
 
 
 

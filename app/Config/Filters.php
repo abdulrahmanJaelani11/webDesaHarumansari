@@ -69,7 +69,20 @@ class Filters extends BaseConfig
      */
     public $filters = [
         'loginAdmin' => [
-            'before' => ['Admin', '/beranda', 'data-berita'],
+            'before' => [
+                'Admin',
+                'Admin/*',
+                '/beranda',
+                'data-berita',
+                'buat-berita',
+                'detail-berita/*',
+                'daftar-layanan',
+                'tambah-layanan',
+                'pendaftar-sktm',
+                'pendaftar/*',
+                'lengkapi-profil-desa'
+            ],
+
             'after' => ['login']
         ],
     ];

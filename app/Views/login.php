@@ -27,6 +27,9 @@
                         <div class="invalid-feedback invalid-password"></div>
                     </div>
                     <div class="form-group">
+                        <input type="checkbox" name="check" id="show" style="margin: 0;"><span style="font-size: small; margin-left:10px;" id="textShow">Tampilkan kata sandi</span>
+                    </div>
+                    <div class="form-group">
                         <button type="submit" name="masuk" class="btn w-100 btnMasuk btn-primary"> Masuk </button>
                     </div>
                 </form>
@@ -40,7 +43,18 @@
 <?= $this->section('script'); ?>
 <script src="<?= base_url("assets"); ?>/js/jquery.js"></script>
 <script>
+    function showPassword() {
+        $("#show").click(function() {
+            if ($('#show').is(':checked')) {
+                $("#password").attr('type', 'text')
+            } else {
+                $("#password").attr('type', 'password')
+            }
+        })
+    }
     $(document).ready(function() {
+        showPassword()
+
         $("form").on('submit', function(e) {
             e.preventDefault()
 
