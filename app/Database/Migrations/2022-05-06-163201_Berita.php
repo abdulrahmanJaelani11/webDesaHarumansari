@@ -16,7 +16,7 @@ class Berita extends Migration
             ],
             'judul' => [
                 'type' => "VARCHAR",
-                'constraint' => 30
+                'constraint' => 255
             ],
             'keterangan' => [
                 'type' => "TEXT",

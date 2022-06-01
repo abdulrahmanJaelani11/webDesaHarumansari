@@ -11,6 +11,11 @@
     <!-- Favicon -->
     <link href="<?= base_url("assets"); ?>/img/favicon.ico" rel="icon">
 
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url("assets"); ?>/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url("assets"); ?>/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url("assets"); ?>/img/favicon-16x16.png">
+    <link rel="manifest" href="<?= base_url("assets"); ?>/img/site.webmanifest">
+
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +43,7 @@
         @media screen and (max-width: 400px) {
             #lokasi {
                 width: 100%;
-                height: 300px;
+                height: 700px;
             }
         }
     </style>
@@ -92,15 +97,18 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profil Desa</a>
                         <div class="dropdown-menu m-0">
-                            <a href="blog.html" class="dropdown-item">Sejarah</a>
-                            <a href="detail.html" class="dropdown-item">Visi & Misi</a>
+                            <a href="<?= base_url("sejarah"); ?>" class="dropdown-item">Sejarah</a>
+                            <a href="<?= base_url("visi-misi"); ?>" class="dropdown-item">Visi & Misi</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Statistk</a>
                         <div class="dropdown-menu m-0">
                             <a href="<?= base_url("statistik-data-desa"); ?>" class="dropdown-item">Data Desa</a>
-                            <a href="detail.html" class="dropdown-item">Visi & Misi</a>
+                            <a href="<?= base_url("statistik-penduduk"); ?>" class="dropdown-item">Data Penduduk</a>
+                            <a href="<?= base_url("statistik-kawin"); ?>" class="dropdown-item">Data Status Perkawinan</a>
+                            <a href="<?= base_url("statistik-agama"); ?>" class="dropdown-item">Data Agama</a>
+                            <a href="<?= base_url("statistik-kelompok-usia"); ?>" class="dropdown-item">Data Kelompok Usia</a>
                         </div>
                     </div>
                     <a href="<?= base_url('layanan'); ?>" class="nav-item nav-link">Layanan Online</a>
@@ -168,7 +176,7 @@
     <!-- Facts Start -->
     <div class="container-fluid facts py-5 pt-lg-0">
         <div class="container py-5 pt-lg-0">
-            <div class="row gx-0">
+            <div class="row gx-0 justify-content-center">
                 <?php foreach ($dataDesa2 as $row) : ?>
                     <div class="col-lg-4 wow zoomIn" data-wow-delay="0.1s">
                         <div class="bg-primary shadow d-flex align-items-center justify-content-center p-4" style="height: 150px;">
@@ -230,58 +238,28 @@
                 <h5 class="fw-bold text-primary text-uppercase">Aparatur Desa</h5>
                 <h1 class="mb-0">Para Kesatria hebat Desa <?= $dataDesa['nama_desa'] ? $dataDesa['nama_desa'] : 'nama desa'; ?></h1>
             </div>
-            <div class="row g-5">
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="<?= base_url("assets"); ?>/img/team-1.jpg" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
+            <div class="row g-5 justify-content-center">
+                <?php foreach ($dataAparatDesa as $row) : ?>
+                    <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                        <div class="team-item bg-light rounded overflow-hidden">
+                            <div class="team-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="<?= base_url("assets"); ?>/img/team-1.jpg" alt="">
+                                <div class="team-social">
+                                    <?php if ($row['wa']) : ?>
+                                        <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-whatsapp fw-normal"></i></a>
+                                    <?php endif ?>
+                                    <?php if ($row['email']) : ?>
+                                        <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fas fa-envelope fw-normal"></i></a>
+                                    <?php endif ?>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <h4 class="text-primary"><?= $row['nama']; ?></h4>
+                                <p class="text-uppercase m-0"><?= $row['jabatan']; ?></p>
                             </div>
                         </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">Full Name</h4>
-                            <p class="text-uppercase m-0">Designation</p>
-                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="<?= base_url("assets"); ?>/img/team-2.jpg" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">Full Name</h4>
-                            <p class="text-uppercase m-0">Designation</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="<?= base_url("assets"); ?>/img/team-3.jpg" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">Full Name</h4>
-                            <p class="text-uppercase m-0">Designation</p>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -301,24 +279,22 @@
                     <!-- Blog Detail Start -->
                     <div class="mb-5">
                         <div class="row">
-                            <?php foreach ($beritaBaru as $row) : ?>
-                                <div class="col-md-6 wow slideInUp" data-wow-delay="0.1s">
-                                    <div class="blog-item bg-light rounded overflow-hidden">
-                                        <div class="blog-img position-relative overflow-hidden">
-                                            <img class="img-fluid" src="<?= base_url("assetsAdmin"); ?>/img/<?= $row['img']; ?>" alt="">
-                                            <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">Berita</a>
+                            <div class="col-md-12 wow slideInUp" data-wow-delay="0.1s">
+                                <div class="blog-item bg-light rounded overflow-hidden">
+                                    <div class="blog-img position-relative overflow-hidden">
+                                        <img class="img-fluid" src="<?= base_url("assetsAdmin"); ?>/img/<?= $viewBerita['img']; ?>" alt="">
+                                        <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">Berita</a>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="d-flex mb-3">
+                                            <small class="me-3"><i class="far fa-user text-primary me-2"></i><?= $viewBerita['penulis']; ?></small>
+                                            <small><i class="far fa-calendar-alt text-primary me-2"></i><?= $viewBerita['tanggal']; ?></small>
                                         </div>
-                                        <div class="p-4">
-                                            <div class="d-flex mb-3">
-                                                <small class="me-3"><i class="far fa-user text-primary me-2"></i><?= $row['penulis']; ?></small>
-                                                <small><i class="far fa-calendar-alt text-primary me-2"></i><?= $row['tanggal']; ?></small>
-                                            </div>
-                                            <h4 class="mb-3"><?= $row['judul']; ?></h4>
-                                            <a class="text-uppercase" href="<?= base_url("detail/" . $row['id']); ?>">Lihat <i class="bi bi-arrow-right"></i></a>
-                                        </div>
+                                        <h4 class="mb-3"><?= $viewBerita['judul']; ?></h4>
+                                        <a class="text-uppercase" href="<?= base_url("detail/" . $viewBerita['id']); ?>">Lihat <i class="bi bi-arrow-right"></i></a>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
                     <!-- Blog Detail End -->
@@ -377,34 +353,28 @@
                 <div class="col-lg-4 col-md-6 footer-about">
                     <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
                         <a href="index.html" class="navbar-brand">
-                            <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>Startup</h1>
+                            <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>Harumansari </h1>
                         </a>
                         <p class="mt-3 mb-4">Lorem diam sit erat dolor elitr et, diam lorem justo amet clita stet eos sit. Elitr dolor duo lorem, elitr clita ipsum sea. Diam amet erat lorem stet eos. Diam amet et kasd eos duo.</p>
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                                <button class="btn btn-dark">Sign Up</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-6">
                     <div class="row gx-5">
                         <div class="col-lg-4 col-md-12 pt-5 mb-5">
                             <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                <h3 class="text-light mb-0">Get In Touch</h3>
+                                <h3 class="text-light mb-0">Kontak</h3>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-geo-alt text-primary me-2"></i>
-                                <p class="mb-0">123 Street, New York, USA</p>
+                                <p class="mb-0"><?= $dataDesa['alamat']; ?></p>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-envelope-open text-primary me-2"></i>
-                                <p class="mb-0">info@example.com</p>
+                                <p class="mb-0"><?= $dataDesa['email']; ?></p>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-telephone text-primary me-2"></i>
-                                <p class="mb-0">+012 345 67890</p>
+                                <p class="mb-0"><?= $dataDesa['tlp']; ?></p>
                             </div>
                             <div class="d-flex mt-4">
                                 <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
@@ -415,28 +385,24 @@
                         </div>
                         <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
                             <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                <h3 class="text-light mb-0">Quick Links</h3>
+                                <h3 class="text-light mb-0">Sosmed Desa</h3>
                             </div>
                             <div class="link-animated d-flex flex-column justify-content-start">
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-                                <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                                <a class="text-light mb-2" href="#"><i class="bi bi-facebook text-primary me-2"></i>Facebook</a>
+                                <a class="text-light mb-2" href="https://www.instagram.com/abdurahman_jaelani/"><i class="bi bi-instagram text-primary me-2"></i>Instagram</a>
+                                <a class="text-light mb-2" href="https://www.linkedin.com/in/abdul-rahman-jaelani-bb8496206/"><i class="bi bi-linkedin text-primary me-2"></i>LinkedIn</a>
+                                <a class="text-light" href="mailto:<?= $dataDesa['email']; ?>"><i class="bi bi-envelope text-primary me-2"></i>Email</a>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
                             <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                <h3 class="text-light mb-0">Popular Links</h3>
+                                <h3 class="text-light mb-0">Developer</h3>
                             </div>
                             <div class="link-animated d-flex flex-column justify-content-start">
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-                                <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                                <a class="text-light mb-2" href="#"><i class="bi bi-facebook text-primary me-2"></i>Facebook</a>
+                                <a class="text-light mb-2" href="https://www.instagram.com/abdurahman_jaelani/"><i class="bi bi-instagram text-primary me-2"></i>Instagram</a>
+                                <a class="text-light mb-2" href="https://www.linkedin.com/in/abdul-rahman-jaelani-bb8496206/"><i class="bi bi-linkedin text-primary me-2"></i>LinkedIn</a>
+                                <a class="text-light" href="mailto:randikaangga9044@gmail.com"><i class="bi bi-envelope text-primary me-2"></i>Email</a>
                             </div>
                         </div>
                     </div>
@@ -449,12 +415,7 @@
             <div class="row justify-content-end">
                 <div class="col-lg-8 col-md-6">
                     <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-                        <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved.
-
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                        </p>
-                        <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                        <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Sistem Informasi Desa Harumansari</a>. Created by Abdurahman Jaelani.
                     </div>
                 </div>
             </div>

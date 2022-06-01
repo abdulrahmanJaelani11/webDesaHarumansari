@@ -1,30 +1,27 @@
 <?= $this->extend('template/umum'); ?>
 
 <?= $this->section('content'); ?>
+<?php foreach ($dataKawin as $row) : ?>
+    <p><?= $row['status_kawin']; ?> : <?= $row['jumlah']; ?></p>
+<?php endforeach; ?>
+<hr>
 <div class="row">
-    <div class="col-md-6">
-        <?php foreach ($dataDesa2 as $row) : ?>
-            <p style="line-height: 15px;"><?= $row['atribut']; ?> : <?= $row['jumlah']; ?></p>
-        <?php endforeach; ?>
-    </div>
-    <hr>
     <div class="col-12">
         <canvas id="myChart"></canvas>
     </div>
 </div>
 <?= $this->endSection(); ?>
-
 <?= $this->section('script'); ?>
 <script src="<?= base_url("assets"); ?>/js/chart.js"></script>
 <script>
-    function getDataDesa() {
+    function getDataStatusKawin() {
         $.ajax({
-            url: "<?= base_url("proses/getDataDesa"); ?>",
+            url: "<?= base_url("proses/getDataStatusKawin"); ?>",
             type: "post",
             dataType: 'json',
             success: function(data) {
                 console.log(data)
-                let atribut = data.atribut
+                let atribut = data.status_kawin
                 let jumlah = data.jumlah
                 var ctx = document.getElementById("myChart").getContext('2d');
                 var myChart = new Chart(ctx, {
@@ -66,8 +63,6 @@
             }
         });
     }
-    $(document).ready(function() {
-        getDataDesa()
-    })
+    getDataStatusKawin()
 </script>
 <?= $this->endSection(); ?>

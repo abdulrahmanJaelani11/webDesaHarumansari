@@ -25,12 +25,12 @@ class StatistikAgama extends Migration
         ]);
 
         $this->forge->addKey('id');
-        $this->forge->createTable('statistik_desa');
+        $this->forge->createTable('statistik_agama');
     }
 
     public function down()
     {
-        $this->forge->dropTable('statistik_desa');
+        $this->forge->dropTable('statistik_agama');
         //
     }
 }

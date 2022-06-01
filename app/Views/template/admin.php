@@ -11,6 +11,15 @@
 
     <title><?= $title; ?></title>
 
+
+    <!-- Favicon -->
+    <link href="<?= base_url("assets"); ?>/img/favicon.ico" rel="icon">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url("assets"); ?>/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url("assets"); ?>/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url("assets"); ?>/img/favicon-16x16.png">
+    <link rel="manifest" href="<?= base_url("assets"); ?>/img/site.webmanifest">
+
     <!-- Custom fonts for this template-->
     <link href="<?= base_url("assetsAdmin"); ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -63,12 +72,20 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url("data-desa"); ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Data Desa</span></a>
-            </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tentang_desa" aria-expanded="true" aria-controls="tentang_desa">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Tentang Desa</span>
+                </a>
+                <div id="tentang_desa" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?= base_url("data-desa"); ?>">Data Desa</a>
+                        <a class="collapse-item" href="<?= base_url("sejarah-desa"); ?>">Sejarah Desa</a>
+                        <a class="collapse-item" href="<?= base_url("set-visi-misi"); ?>">Visi & Misi Desa</a>
+                    </div>
+                </div>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#statistik_desa" aria-expanded="true" aria-controls="statistik_desa">
                     <i class="fas fa-fw fa-users"></i>
@@ -77,7 +94,10 @@
                 <div id="statistik_desa" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?= base_url("data-desa"); ?>">Data Desa</a>
-                        <a class="collapse-item" href="<?= base_url("buat-berita"); ?>">Sta</a>
+                        <a class="collapse-item" href="<?= base_url("data-penduduk"); ?>">Data Penduduk</a>
+                        <a class="collapse-item" href="<?= base_url("status-kawin"); ?>">Data Status Perkawinan</a>
+                        <a class="collapse-item" href="<?= base_url("data-agama"); ?>">Data Agama</a>
+                        <a class="collapse-item" href="<?= base_url("data-kelompok-usia"); ?>">Data Kelompok Usia</a>
                     </div>
                 </div>
             </li>
@@ -122,7 +142,7 @@
                 </a>
                 <div id="setProfil" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?= base_url("lengkapi-profil-desa"); ?>">Lengkapi Profil Desa</a>
+                        <a class="collapse-item" href="<?= base_url("lengkapi-profil-desa"); ?>">Atur Profil Desa</a>
                     </div>
                 </div>
             </li>
@@ -131,7 +151,7 @@
             <hr class="sidebar-divider d-none d-md-block">
 
             <li class="nav-item">
-                <a class="nav-link logout" href="<?= base_url("data-desa"); ?>">
+                <a class="nav-link logout" href="">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Log out</span></a>
             </li>
@@ -302,11 +322,15 @@
     <!-- Page level custom scripts -->
     <script src="<?= base_url("assetsAdmin"); ?>/js/demo/datatables-demo.js"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
     <script>
         function showSidebar() {
             $("#accordionSidebar").fadeToggle(200)
         }
         $(document).ready(function() {
+
             $(".logout").click(function(e) {
                 e.preventDefault()
                 Swal.fire({

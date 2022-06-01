@@ -39,6 +39,12 @@ $routes->get('/berita/(:num)', 'Home::beritaKategori/$1');
 $routes->get('/detail/(:num)', 'Home::detail/$1');
 $routes->get('/form-sktm', 'Home::formSktm');
 $routes->get('/statistik-data-desa', 'Home::dataDesa');
+$routes->get('/sejarah', 'Home::sejarahDesa');
+$routes->get('/visi-misi', 'Home::visiMisiDesa');
+$routes->get('/statistik-penduduk', 'Home::dataPenduduk');
+$routes->get('/statistik-kawin', 'Home::dataStatusKawin');
+$routes->get('/statistik-agama', 'Home::dataAgama');
+$routes->get('/statistik-kelompok-usia', 'Home::dataKelompokUsia');
 
 
 
@@ -54,6 +60,12 @@ $routes->get('/pendaftar-sktm/(:num)', 'Admin::detailPendaftarSktm/$1');
 $routes->get('/print-surat/(:num)', 'Admin::printSurat/$1');
 $routes->get('/lengkapi-profil-desa', 'Admin::setProfilDesa');
 $routes->get('/lengkapi-data-desa', 'Admin::setDataDesa');
+$routes->get('/sejarah-desa', 'Admin::sejarahDesa');
+$routes->get('/set-visi-misi', 'Admin::visiMisiDesa');
+$routes->get('/data-penduduk', 'Admin::dataPenduduk');
+$routes->get('/status-kawin', 'Admin::dataKawin');
+$routes->get('/data-agama', 'Admin::dataAgama');
+$routes->get('/data-kelompok-usia', 'Admin::dataKelompokUsia');
 
 
 

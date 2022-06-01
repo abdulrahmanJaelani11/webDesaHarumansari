@@ -25,12 +25,12 @@ class StatistikJk extends Migration
         ]);
 
         $this->forge->addKey('id');
-        $this->forge->createTable('statistik_jk');
+        $this->forge->createTable('data_penduduk');
     }
 
     public function down()
     {
-        $this->forge->dropTable('statistik_jk');
+        $this->forge->dropTable('data_penduduk');
         //
     }
 }

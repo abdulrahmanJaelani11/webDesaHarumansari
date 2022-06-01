@@ -2,29 +2,42 @@
 
 <?= $this->section('content'); ?>
 <div class="row">
-    <div class="col-md-6">
-        <?php foreach ($dataDesa2 as $row) : ?>
-            <p style="line-height: 15px;"><?= $row['atribut']; ?> : <?= $row['jumlah']; ?></p>
-        <?php endforeach; ?>
-    </div>
-    <hr>
     <div class="col-12">
         <canvas id="myChart"></canvas>
     </div>
 </div>
+<hr>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Usia</th>
+            <th scope="col">Jumlah</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $i = 1; ?>
+        <?php foreach ($dataKelompokUsia as $row) : ?>
+            <tr>
+                <th scope="row"><?= $i++; ?></th>
+                <td><?= $row['usia']; ?></td>
+                <td><?= $row['jumlah']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 <?= $this->endSection(); ?>
-
 <?= $this->section('script'); ?>
 <script src="<?= base_url("assets"); ?>/js/chart.js"></script>
 <script>
-    function getDataDesa() {
+    function getDataKelomUsia() {
         $.ajax({
-            url: "<?= base_url("proses/getDataDesa"); ?>",
+            url: "<?= base_url("proses/getDataKelomUsia"); ?>",
             type: "post",
             dataType: 'json',
             success: function(data) {
                 console.log(data)
-                let atribut = data.atribut
+                let atribut = data.usia
                 let jumlah = data.jumlah
                 var ctx = document.getElementById("myChart").getContext('2d');
                 var myChart = new Chart(ctx, {
@@ -66,8 +79,6 @@
             }
         });
     }
-    $(document).ready(function() {
-        getDataDesa()
-    })
+    getDataKelomUsia()
 </script>
 <?= $this->endSection(); ?>

@@ -4,10 +4,14 @@ namespace App\Controllers;
 
 use App\Models\AdminModel;
 use App\Models\BeritaModel;
+use App\Models\dataAgamaModel;
 use App\Models\dataDesaModel;
+use App\Models\DataPendudukModel;
+use App\Models\dataStatusPerkawinan;
+use App\Models\KelompokUsiaModel;
 use App\Models\KomentarModel;
 use App\Models\PendaftarSktm;
-use App\Models\ProfilDesa;
+use App\Models\ProfilDesaModel;
 
 class Proses extends BaseController
 {
@@ -16,6 +20,9 @@ class Proses extends BaseController
     protected $BeritaModel;
     protected $profilDesa;
     protected $dataDesa;
+    protected $dataAgama;
+    protected $dataPenduduk;
+    protected $dataStatusPerkawinanModel;
     protected $pendaftarSktm;
     protected $KomentarModel;
     public function __construct()
@@ -23,8 +30,12 @@ class Proses extends BaseController
         $this->validasi = \Config\Services::validation();
         $this->AdminModel = new AdminModel();
         $this->BeritaModel = new BeritaModel();
-        $this->profilDesa = new ProfilDesa();
+        $this->profilDesa = new ProfilDesaModel();
         $this->dataDesa = new dataDesaModel();
+        $this->dataAgama = new dataAgamaModel();
+        $this->dataKelompokUsia = new KelompokUsiaModel();
+        $this->dataPenduduk = new DataPendudukModel();
+        $this->dataStatusPerkawinanModel = new dataStatusPerkawinan();
         $this->pendaftarSktm = new PendaftarSktm();
         $this->KomentarModel = new KomentarModel();
     }
@@ -64,6 +75,7 @@ class Proses extends BaseController
 
                     ];
                     echo json_encode($pesan);
+                    // return redirect()->to("beranda");
                 } else {
                     $pesan = [
                         'status' => 400,
@@ -449,17 +461,239 @@ class Proses extends BaseController
             'atribut' => $atribut,
             'jumlah' => $jumlah
         ];
-
-        // {
-        //     atribut : ['dadsada', 'dasdadad', 'adsadadad', 'dasdadad'],
-        //     jumlah : ['asdadad', 'adsadadad', 'dasdadad', 'dasdadadad']
-        // }
-        // var_dump($data);
-
-        // $data = [
-        //     'dataDesa' => 
-        // ];
-
         echo json_encode($dataArray);
+    }
+
+    public function getDataPenduduk()
+    {
+        $data = $this->dataDesa->db->query("SELECT * FROM data_penduduk")->getResultArray();
+        if ($data == [] and count($data) < 2) {
+            echo json_encode($data);
+        } else {
+            $total = $data[0]['jumlah'] + $data[1]['jumlah'];
+            $dataArray = [
+                'atribut' => [$data[0]['jk'], $data[1]['jk'], 'total'],
+                'jumlah' => [$data[0]['jumlah'], $data[1]['jumlah'], $total],
+            ];
+
+            echo json_encode($dataArray);
+        }
+    }
+
+    public function hapusDataDesa($data = null)
+    {
+        $id = $this->request->getVar('id');
+
+        $this->dataDesa->delete($id);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Data Berhasil dihapus"
+        ];
+
+        echo json_encode($pesan);
+    }
+
+    public function simpanSejarah($data = null)
+    {
+        $data = $this->request->getPost('sejarah');
+
+        $this->profilDesa->update(1, [
+            'sejarah' => $data
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Berhasil Menambahkan Sejarah"
+        ];
+
+        echo json_encode($pesan);
+    }
+
+    public function simpanVisiMisi($data = null)
+    {
+        $data = $this->request->getPost('visiMisi');
+
+        $this->profilDesa->update(1, [
+            'visi_misi' => $data
+        ]);
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Berhasil Menambahkan Visi Misi"
+        ];
+
+        echo json_encode($pesan);
+    }
+
+    public function simpanDataPenduduk($data = null)
+    {
+        $data = $this->request->getPost();
+        if (!$this->validate([
+            'jk' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "Field tidak boleh kosong",
+                ]
+            ],
+            'jumlah' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "Field tidak boleh kosong",
+                ]
+            ],
+        ])) {
+            $pesan = [
+                'status' => 400,
+                'pesan' => [
+                    'jk' => $this->validasi->getError('jk'),
+                    'jumlah' => $this->validasi->getError('jumlah'),
+                ]
+            ];
+
+            echo json_encode($pesan);
+        } else {
+            $this->dataPenduduk->save([
+                'jk' => $data['jk'],
+                'jumlah' => $data['jumlah'],
+            ]);
+
+            $pesan = [
+                'status' => 200,
+                'pesan' => "Berhasil Menambahkan Data Penduduk"
+            ];
+            echo json_encode($pesan);
+        }
+    }
+
+    public function updateDataPenduduk($data = null)
+    {
+        $data = $this->request->getPost();
+        if (!$this->validate([
+            'jumlah' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => "Field tidak boleh kosong",
+                ]
+            ],
+        ])) {
+            $pesan = [
+                'status' => 400,
+                'pesan' => [
+                    'jumlah' => $this->validasi->getError('jumlah'),
+                ]
+            ];
+
+            echo json_encode($pesan);
+        } else {
+            $this->dataPenduduk->update($data['id'], [
+                'jumlah' => $data['jumlah'],
+            ]);
+
+            $pesan = [
+                'status' => 200,
+                'pesan' => "Berhasil Mengubah Data Penduduk"
+            ];
+            echo json_encode($pesan);
+        }
+    }
+
+    public function getDataStatusKawin($data = null)
+    {
+        $data = $this->dataStatusPerkawinanModel->db->query("SELECT * FROM statistik_status_kawin")->getResultArray();
+        foreach ($data as $row) {
+            $status_kawin[] = $row['status_kawin'];
+        }
+        foreach ($data as $row) {
+            $jumlah[] = $row['jumlah'];
+        }
+
+        $dataArray = [
+            'status_kawin' => $status_kawin,
+            'jumlah' => $jumlah
+        ];
+        echo json_encode($dataArray);
+    }
+
+    public function getDataAgama()
+    {
+        $data = $this->dataStatusPerkawinanModel->db->query("SELECT * FROM statistik_agama")->getResultArray();
+        foreach ($data as $row) {
+            $agama[] = $row['agama'];
+        }
+        foreach ($data as $row) {
+            $jumlah[] = $row['jumlah'];
+        }
+
+        $dataArray = [
+            'agama' => $agama,
+            'jumlah' => $jumlah
+        ];
+        echo json_encode($dataArray);
+    }
+
+    public function getDataKelomUsia()
+    {
+        $kelompokUsia = new KelompokUsiaModel();
+        $data = $kelompokUsia->db->query("SELECT * FROM statistik_kelompok_usia")->getResultArray();
+        foreach ($data as $row) {
+            $usia[] = $row['usia'];
+        }
+        foreach ($data as $row) {
+            $jumlah[] = $row['jumlah'];
+        }
+
+        $dataArray = [
+            'usia' => $usia,
+            'jumlah' => $jumlah
+        ];
+        echo json_encode($dataArray);
+    }
+
+    public function ubahStatusKawin()
+    {
+        $data = $this->request->getPost();
+
+        $this->dataStatusPerkawinanModel->update($data['id'], [
+            'jumlah' => $data['jumlah']
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Berhasil Mengubah data"
+        ];
+
+        echo json_encode($pesan);
+    }
+
+    public function ubahDataAgama()
+    {
+        $data = $this->request->getPost();
+
+        $this->dataAgama->update($data['id'], [
+            'jumlah' => $data['jumlah']
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Berhasil Mengubah data"
+        ];
+
+        echo json_encode($pesan);
+    }
+
+    public function updateDataKelomUsia()
+    {
+        $data = $this->request->getPost();
+
+        $this->dataKelompokUsia->update($data['id'], [
+            'jumlah' => $data['jumlah']
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Berhasil Mengubah data"
+        ];
+
+        echo json_encode($pesan);
     }
 }

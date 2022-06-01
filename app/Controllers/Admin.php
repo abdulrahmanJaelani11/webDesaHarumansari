@@ -3,10 +3,14 @@
 namespace App\Controllers;
 
 use App\Models\BeritaModel;
+use App\Models\dataAgamaModel;
 use App\Models\dataDesaModel;
+use App\Models\DataPendudukModel;
+use App\Models\dataStatusPerkawinan;
 use App\Models\KategoriModel;
+use App\Models\KelompokUsiaModel;
 use App\Models\PendaftarSktm;
-use App\Models\ProfilDesa;
+use App\Models\ProfilDesaModel;
 
 class Admin extends BaseController
 {
@@ -14,13 +18,21 @@ class Admin extends BaseController
     protected $BeritaModel;
     protected $profilDesa;
     protected $dataDesa;
+    protected $dataKawin;
+    protected $dataKelompokUsia;
+    protected $dataAgama;
+    protected $dataPendudukModel;
     protected $pendaftarSktm;
     public function __construct()
     {
         $this->kategori = new KategoriModel();
         $this->BeritaModel = new BeritaModel();
-        $this->profilDesa = new ProfilDesa();
+        $this->profilDesa = new ProfilDesaModel();
         $this->dataDesa = new dataDesaModel();
+        $this->dataKelompokUsia = new KelompokUsiaModel();
+        $this->dataKawin = new dataStatusPerkawinan();
+        $this->dataAgama = new dataAgamaModel();
+        $this->dataPendudukModel = new DataPendudukModel();
         $this->pendaftarSktm = new PendaftarSktm();
     }
 
@@ -179,12 +191,110 @@ class Admin extends BaseController
         return view("admin/formDataDesa", $data);
     }
 
-    public function getTableDateDesa($data = null)
+    public function getTableDataDesa($data = null)
     {
         $data = [
             'dataDesa' => $this->dataDesa->findAll()
         ];
 
         echo json_encode(view("admin/table/tableDataDesa", $data));
+    }
+
+    public function sejarahDesa()
+    {
+        $data = [
+            'title' => "Sejarah Desa",
+            'profilDesa' => $this->profilDesa->db->query("SELECT * FROM desa")->getRowArray(),
+            'dataDesa' => $this->profilDesa->db->query("SELECT * FROM desa")->getRowArray()
+        ];
+
+        return view("admin/formSejarahDesa", $data);
+    }
+
+    public function visiMisiDesa($data = null)
+    {
+        $data = [
+            'title' => "Visi Misi Desa",
+            'profilDesa' => $this->profilDesa->db->query("SELECT * FROM desa")->getRowArray(),
+            'dataDesa' => $this->profilDesa->db->query("SELECT * FROM desa")->getRowArray()
+        ];
+
+        return view("admin/visiMisiDesa", $data);
+    }
+
+    public function dataPenduduk($data = null)
+    {
+        $data = [
+            'title' => "Data Penduduk",
+            'dataPenduduk' => $this->dataPendudukModel->findAll()
+        ];
+
+        return view("admin/fomrDataPenduduk", $data);
+    }
+
+    public function getTablePenduduk($data = null)
+    {
+        $data = [
+            'dataPenduduk' => $this->dataPendudukModel->findAll()
+        ];
+
+        echo json_encode(view("admin/table/tableDataPenduduk", $data));
+    }
+
+    public function dataKawin()
+    {
+        $data = [
+            'title' => "Data Status Perkawinan",
+            'dataKawin' => $this->dataKawin->findAll()
+        ];
+
+        return view("admin/dataKawin", $data);
+    }
+
+    public function getTableDataKawin()
+    {
+        $data = [
+            'dataKawin' => $this->dataKawin->semua()
+        ];
+
+        echo json_encode(view('admin/table/tableDataKawin', $data));
+    }
+
+    public function dataAgama()
+    {
+        $data = [
+            'title' => "Data Status Perkawinan",
+            'dataAgama' => $this->dataAgama->findAll()
+        ];
+
+        return view("admin/dataAgama", $data);
+    }
+
+    public function getTableDataAgama()
+    {
+        $data = [
+            'dataAgama' => $this->dataAgama->semua()
+        ];
+
+        echo json_encode(view('admin/table/tableDataAgama', $data));
+    }
+
+    public function dataKelompokUsia()
+    {
+        $data = [
+            'title' => "Data Kelompok Usia",
+            'dataAgama' => $this->dataKelompokUsia->findAll()
+        ];
+
+        return view("admin/dataKelompokUsia", $data);
+    }
+
+    public function getTableKelomUsia()
+    {
+        $data = [
+            'dataKelompokUsia' => $this->dataKelompokUsia->semua()
+        ];
+
+        echo json_encode(view('admin/table/tableDataKelomUsia', $data));
     }
 }

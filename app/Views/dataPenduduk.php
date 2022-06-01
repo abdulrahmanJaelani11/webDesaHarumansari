@@ -1,25 +1,24 @@
 <?= $this->extend('template/umum'); ?>
-
 <?= $this->section('content'); ?>
+<?php foreach ($dataPenduduk as $row) : ?>
+    <p style="line-height: 10px;"><?= $row['jk']; ?> : <?= $row['jumlah']; ?></p>
+<?php endforeach; ?>
+<?php if ($dataPenduduk != null and count($dataPenduduk) == 2) : ?>
+    <p class="total" style="line-height: 10px;">Total : <?= $dataPenduduk[0]['jumlah'] + $dataPenduduk[1]['jumlah']; ?></p>
+<?php endif ?>
+<hr>
 <div class="row">
-    <div class="col-md-6">
-        <?php foreach ($dataDesa2 as $row) : ?>
-            <p style="line-height: 15px;"><?= $row['atribut']; ?> : <?= $row['jumlah']; ?></p>
-        <?php endforeach; ?>
-    </div>
-    <hr>
     <div class="col-12">
         <canvas id="myChart"></canvas>
     </div>
 </div>
 <?= $this->endSection(); ?>
-
 <?= $this->section('script'); ?>
 <script src="<?= base_url("assets"); ?>/js/chart.js"></script>
 <script>
-    function getDataDesa() {
+    function getDataPenduduk() {
         $.ajax({
-            url: "<?= base_url("proses/getDataDesa"); ?>",
+            url: "<?= base_url("proses/getDataPenduduk"); ?>",
             type: "post",
             dataType: 'json',
             success: function(data) {
@@ -66,8 +65,6 @@
             }
         });
     }
-    $(document).ready(function() {
-        getDataDesa()
-    })
+    getDataPenduduk()
 </script>
 <?= $this->endSection(); ?>

@@ -46,13 +46,53 @@
 <script>
     function getTable() {
         $.ajax({
-            url: "<?= base_url('Admin/getTableDateDesa'); ?>",
+            url: "<?= base_url('Admin/getTableDataDesa'); ?>",
             type: "post",
             dataType: 'json',
             success: function(data) {
+                console.log(data)
                 $(".getTable").html(data)
+                $(".btnHapus").click(function(e) {
+                    e.preventDefault()
+                    Swal.fire({
+                        icon: 'question',
+                        title: 'Yakin?',
+                        text: "Yakin untuk menghapus data?",
+                        showDenyButton: false,
+                        showCancelButton: true,
+                        confirmButtonText: 'Yakin',
+                        denyButtonText: `Don't save`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: $(".formHapus").attr('action'),
+                                type: "post",
+                                data: $(".formHapus").serialize(),
+                                dataType: 'json',
+                                success: function(data) {
+                                    if (data.status == 200) {
+                                        getTable()
+                                        Swal.fire(
+                                            'Berhasil',
+                                            data.pesan,
+                                            'success'
+                                        )
+                                    }
+                                }
+                            });
+                        } else if (result.isDenied) {
+                            Swal.fire('Changes are not saved', '', 'info')
+                        }
+                    })
+                })
             }
         });
+    }
+
+    function resetForm() {
+        $("#data").val('')
+        $("#jumlah").val('')
     }
     $(document).ready(function() {
         getTable()
@@ -74,6 +114,7 @@
                 data: $(this).serialize(),
                 dataType: 'json',
                 success: function(data) {
+                    console.log(data)
                     if (data.status == 200) {
                         getTable()
                         $(".formTambahData").slideToggle(500)
@@ -83,6 +124,7 @@
                             data.pesan,
                             'success'
                         )
+                        resetForm()
                     }
                 }
             });
