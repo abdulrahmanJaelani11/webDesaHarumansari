@@ -38,6 +38,7 @@ class Proses extends BaseController
         $this->dataStatusPerkawinanModel = new dataStatusPerkawinan();
         $this->pendaftarSktm = new PendaftarSktm();
         $this->KomentarModel = new KomentarModel();
+        helper("email_helper");
     }
 
     public function prosesLogin()
@@ -62,8 +63,10 @@ class Proses extends BaseController
         } else {
             $admin = $this->AdminModel->getWhere(['email' => $data['email']])->getResultArray();
             if (count($admin) > 0) {
-                if ($data['password'] == $admin[0]['password']) {
+                if (password_verify($data['password'], $admin[0]['password'])) {
+                    $id = $admin[0]['id'];
                     $session = [
+                        'id' => $id,
                         'login' => true,
                         'username' => $admin[0]['username'],
                         'email' => $admin[0]['email']
@@ -276,10 +279,11 @@ class Proses extends BaseController
                 ]
             ],
             'tlp' => [
-                'rules' => "required|max_length[14]",
+                'rules' => "required|max_length[14]|min_length[14]",
                 'errors' => [
                     'required' => "Maaf Telepon Tidak Boleh Kosong",
-                    'max_length' => "Maaf Sepertinya No yang anda masukan salah, Silahkan cek kembali"
+                    'max_length' => "Maaf Sepertinya No Tlp yang anda masukan salah, Silahkan cek kembali",
+                    'min_length' => "Maaf Sepertinya No Tlp yang anda masukan salah, Silahkan cek kembali",
                 ]
             ]
         ])) {
@@ -334,7 +338,8 @@ class Proses extends BaseController
                             'alamat' => $data['alamat'],
                             'status_surat' => 'proses',
                             'tlp' => $data['tlp'],
-                            'kepentingan' => $data['kepentingan']
+                            'kepentingan' => $data['kepentingan'],
+                            'tgl_daftar' => date('d-m-Y')
                         ]);
 
                         $pesan = [
@@ -366,9 +371,15 @@ class Proses extends BaseController
 
         if ($data->getNumRows() > 0) {
             $data = $data->getRowArray();
+            if ($data['status_surat'] == 'proses') {
+                $pesan = "Maaf, Surat Anda Sedang Di Proses";
+            } else {
+                $pesan = "Surat Anda Telah Selesai, Silahkan Ambil Di Kantor Desa Harumansari";
+            }
             $data = [
                 'status' => 200,
-                'data' => $data
+                'data' => $data,
+                'pesan' => $pesan
             ];
 
             echo json_encode($data);
@@ -695,5 +706,135 @@ class Proses extends BaseController
         ];
 
         echo json_encode($pesan);
+    }
+
+    public function lupaPassword()
+    {
+        $email = $this->request->getVar('email');
+        if (!$this->validate([
+            'email' => [
+                'rules' => "required",
+                'errors' => [
+                    'required' => "Maaf Email Harus Di Isi"
+                ]
+            ]
+        ])) {
+            $pesan = [
+                'status' => "400",
+                'pesan' => $this->validasi->getError('email')
+            ];
+
+            echo json_encode($pesan);
+        } else {
+            $dataAkunLama = $this->AdminModel->getWhere(['email' => $email])->getRowArray();
+
+            // echo json_encode($dataAkunLama);
+            // die;
+            if (!$dataAkunLama) {
+
+                $pesan = [
+                    'status' => "400",
+                    'pesan' => "Maaf Email Tidak Terdaftar"
+                ];
+
+                echo json_encode($pesan);
+            } else {
+                $email = $dataAkunLama['email'];
+                $token = md5(date('ymdhis'));
+
+                $link = site_url("Admin/resetPass/?email=$email&token=$token");
+                $attachment = "";
+                $title = "Reset Password";
+                $to = $email;
+                $pesan = "Berikut ini adalah link untuk melakukan reset password Anda, Silahkan klik link berikut untuk melakukan reset password " . $link;
+
+                kirim_email($attachment, $to, $title, $pesan);
+
+                $this->AdminModel->update($dataAkunLama['id'], [
+                    'token' => $token
+                ]);
+
+                $pesan = [
+                    'status' => "200",
+                    'pesan' => "Email Untuk Recovery sudah kami kirimkan ke Email Anda"
+                ];
+
+                echo json_encode($pesan);
+            }
+        }
+    }
+
+    public function simpanDataMe()
+    {
+        $data = $this->request->getVar();
+        // echo json_encode($data);
+        $validasi = [
+            'nik' => [
+                'rules' => "required|max_length[16]|min_length[16]",
+                'errors' => [
+                    'required' => 'Maaf, Nik tidak boleh kosong',
+                    'max_length' => "Maaf Sepertinya nik yang anda masukan Salah, Nik harus berjumlah 16 angka",
+                    'min_length' => "Maaf Sepertinya nik yang anda masukan Salah, Nik harus berjumlah 16 angka",
+                ]
+            ],
+            'nama_lengkap' => [
+                'rules' => "required",
+                'errors' => [
+                    'required' => 'Maaf, Nama tidak boleh kosong',
+                ]
+            ],
+        ];
+        if (!$this->validate($validasi)) {
+            $pesan = [
+                'status' => 200,
+                'pesan' => [
+                    'nik' => $this->validasi->getError('nik'),
+                    'nama' => $this->validasi->getError('nama_lengkap')
+                ]
+            ];
+            echo json_encode($pesan);
+        } else {
+            $email = session()->get('email');
+            $id = session()->get('id');
+            $cek = $this->AdminModel->getWhere(['nik' => $data['nik']])->getRowArray();
+            $dataAkunLama = $this->AdminModel->getWhere(['email' => $email])->getRowArray();
+            if ($cek) {
+                if ($data['nik'] == $dataAkunLama['nik']) {
+                    $this->AdminModel->update($id, [
+                        'email' => htmlspecialchars($data['email']),
+                        'username' => htmlspecialchars($data['username']),
+                        'nama_lengkap' => htmlspecialchars($data['nama_lengkap']),
+                        'nik' => htmlspecialchars($data['nik']),
+                        'img' => ''
+                    ]);
+                    $pesan = [
+                        'status' => 400,
+                        'pesan' => "Berhasil MengUpdate Data"
+                    ];
+                    echo json_encode($pesan);
+                } else {
+                    $pesan = [
+                        'status' => 200,
+                        'pesan' => [
+                            'nik' => "Maaf Nik Sudah Terdaftar"
+                        ]
+                    ];
+                    echo json_encode($pesan);
+                }
+            } else {
+                $this->AdminModel->update($id, [
+                    'email' => htmlspecialchars($data['email']),
+                    'username' => htmlspecialchars($data['username']),
+                    'nama_lengkap' => htmlspecialchars($data['nama_lengkap']),
+                    'nik' => htmlspecialchars($data['nik']),
+                    'img' => ''
+                ]);
+                $pesan = [
+                    'status' => 400,
+                    'pesan' => "Berhasil MengUpdate Data"
+                ];
+                echo json_encode($pesan);
+            }
+        }
     }
 }

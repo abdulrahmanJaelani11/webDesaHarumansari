@@ -1,0 +1,41 @@
+@media screen and (max-width: 400px) {
+  #lokasi {
+    width: 100%;
+    height: 700px;
+  }
+
+  .textWelcome {
+    font-size: 20px;
+  }
+
+  .navbar-toggler {
+    padding: 3px;
+  }
+
+  .namaDesa {
+    font-size: 24px;
+  }
+
+  .btnGambar {
+    /* padding: 5px;
+    font-size: 10px; */
+    display: none;
+  }
+
+  .infoDataDesa,
+  .facts {
+    margin: 10px 0;
+  }
+
+  .cardInfoDesa {
+    margin: 5px 0;
+  }
+
+  .cardForm {
+    margin-top: 20%;
+  }
+
+  .col-img {
+    width: 40%;
+  }
+}

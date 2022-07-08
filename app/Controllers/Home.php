@@ -59,7 +59,16 @@ class Home extends BaseController
         $data = [
             'title' => "Login"
         ];
+
         return view("login", $data);
+    }
+
+    public function lupaPassword()
+    {
+        $data = [
+            'title' => "Lupa Password"
+        ];
+        return view("lupaPassword", $data);
     }
 
     public function berita($data = null)

@@ -21,7 +21,7 @@
             <tr>
                 <th scope="row"><?= $i++; ?></th>
                 <td><?= $row['usia']; ?></td>
-                <td><?= $row['jumlah']; ?></td>
+                <td><?= $row['jumlah']; ?> Orang</td>
             </tr>
         <?php endforeach; ?>
     </tbody>

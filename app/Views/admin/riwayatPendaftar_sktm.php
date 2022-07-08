@@ -1,9 +1,10 @@
 <?= $this->extend('template/admin'); ?>
 
 <?= $this->section('content'); ?>
+
 <div class="card shadow mt-3">
     <div class="card-header">
-        <h3 class=" font-weight-bold"><?= $title; ?></h3>
+        <h3 class=" font-weight-bold">Riwayat Pendaftar SKTM</h3>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -14,7 +15,7 @@
                         <th>Nama</th>
                         <th>Nik</th>
                         <th>Status</th>
-                        <th>Telepon</th>
+                        <th>Tanggal Selesai</th>
                         <th>Opsi</th>
                     </tr>
                 </thead>
@@ -30,7 +31,7 @@
                                     <p class="<?= $row['status_surat'] == 'selesai' ? 'bg-success' : 'bg-warning'; ?> text-light p-1" style="border-radius: 7px;"><?= $row['status_surat']; ?></p>
                                 </div>
                             </td>
-                            <td><a href="http://wa.me/<?= $row['tlp']; ?>" class="btn btn-primary btn-block" target="blank">Hubungi WA</a></td>
+                            <td><?= $row['tgl_selesai']; ?></td>
                             <td>
                                 <a href="<?= base_url("pendaftar-sktm/" . $row['id']); ?>" class="btn btn-sm btn-primary btn-block">Detail</a>
                             </td>
@@ -39,7 +40,6 @@
                 </tbody>
             </table>
         </div>
-        <a href="<?= base_url('riwayat-pendaftar-sktm'); ?>" class="btn btn-sm btn-primary">Riwayat Pendaftar Sktm</a>
     </div>
 </div>
 <?= $this->endSection(); ?>

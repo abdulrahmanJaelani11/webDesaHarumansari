@@ -29,6 +29,7 @@
 
     <!-- Template Stylesheet -->
     <link href="<?= base_url("assets"); ?>/css/style.css" rel="stylesheet">
+    <link href="<?= base_url("assets"); ?>/css/mycss.css" rel="stylesheet">
     <?= $this->renderSection('style'); ?>
 </head>
 

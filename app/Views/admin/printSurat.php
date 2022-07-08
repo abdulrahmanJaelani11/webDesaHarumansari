@@ -12,9 +12,44 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="<?= base_url("assetsAdmin"); ?>/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="assetsAdmin/css/sb-admin-2.min.css" rel="stylesheet">
 
     <link href="<?= base_url("assetsAdmin"); ?>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 0;
+        }
+
+        .isi_surat .kepentingan {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .surat_header {
+            text-align: center;
+        }
+
+        .judul_surat {
+            text-align: center;
+        }
+
+        .judul_surat p {
+            margin: 7px 0;
+
+        }
+
+        .tanda_tangan {
+            display: flexbox;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: aqua;
+        }
+
+        h3,
+        h4 {
+            margin: 7px 0;
+        }
+    </style>
 
 </head>
 
@@ -23,9 +58,9 @@
 
         <div class="row justify-content-center">
             <div class="col-3">
-                <img src="<?= base_url("assetsAdmin/img/logo.png"); ?>" class="img-fluid">
+                <img src="<?= base_url('assetsAdmin'); ?>/img/logo.png" alt="Garut" class="img-fluid">
             </div>
-            <div class="col-6 text-center mt-3">
+            <div class="col-6 text-center mt-3 surat_header">
                 <h4 class="font-weight-bold text-gray-900">PEMERINTAH KABUPATEN GARUT</h4>
                 <H4 class="font-weight-bold text-gray-900">KECAMATAN KADUNGORA</H4>
                 <H3 class="font-weight-bold text-gray-900">DESA HARUMANSARI</H3>
@@ -35,7 +70,7 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col text-center">
+            <div class="col text-center judul_surat">
                 <h3 class="text-uppercase">SURAT KETERANGAN TIDAK MAMPU</h3>
                 <p>Nomor : . . . . . . / . . . . . . / . . . . . . </p>
             </div>
@@ -96,41 +131,29 @@
                 </table>
             </div>
         </div>
-        <div class="row  mt-4">
-            <div class="col">
+        <div class="row mt-4">
+            <div class="col isi_surat">
                 <p style="text-align: justify; text-indent: 0.5in;">Nama tersebut diatas adalah benar penduduk Desa kami sesuai keterangan dari RT, RW dan berdasarkan catatan yang ada pada kantor kami bahwa orang tersebut diatas adalah keluarga tidak mampu dan surat keterangan ini dapat dipergunakan untuk :</p>
-                <p class="font-weight-bold">Kepentingan Persyaratan <?= $pendaftar['kepentingan']; ?></p>
+                <p class="font-weight-bold kepentingan">Kepentingan Persyaratan <?= $pendaftar['kepentingan']; ?></p>
                 <p style="text-align: justify; text-indent: 0.5in;">Demikian surat keterangan ini kami buat dengan sebenarnya dan dapat dipergunakan sebagaimana mestinya</p>
             </div>
         </div>
         <div class="row justify-content-between">
-            <div class="col-9"></div>
             <div class="col-3">
                 <p>Harumansari <?= date("d M y"); ?></p>
             </div>
         </div>
-        <div class="row text-center mt-4 justify-content-between">
-            <div class="col-4">
-                <p>Ketua RW :. . . . . . . . </p>
-                <p style="margin-top: 100px;">. . . . . . . . . . . . . .</p>
-            </div>
-            <div class="col-4">
-                <p>Ketua RT :. . . . . . . . </p>
-                <p style="margin-top: 100px;">. . . . . . . . . . . . . .</p>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-4 text-center">
-                <p>Kepala Desa Harumansari</p>
-                <p style="margin-top: 100px;">DEDE ROSITA</p>
-            </div>
+        <div class="row text-center mt-4 justify-content-between tanda_tangan">
+            <p>coba</p>
+            <p>coba</p>
+            <p>coba</p>
         </div>
     </div>
 
 
-    <script>
+    <!-- <script>
         window.print()
-    </script>
+    </script> -->
     <script src="<?= base_url("assets"); ?>/js/jquery.js"></script>
     <script src="<?= base_url("assets"); ?>/js/sweetalert2.js"></script>
 

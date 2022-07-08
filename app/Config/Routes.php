@@ -33,6 +33,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('/login', 'Home::login');
+$routes->get('/lupa-password', 'Home::lupaPassword');
 $routes->get('/berita', 'Home::berita');
 $routes->get('/layanan', 'Home::layanan');
 $routes->get('/berita/(:num)', 'Home::beritaKategori/$1');
@@ -56,6 +57,7 @@ $routes->get('/detailBerita/(:num)', 'Admin::detailBerita/$1');
 $routes->get('/daftar-layanan', 'Admin::dataLayanan');
 $routes->get('/tambah-layanan', 'Admin::tambahLayanan');
 $routes->get('/pendaftar-sktm', 'Admin::pendaftarSktm');
+$routes->get('/riwayat-pendaftar-sktm', 'Admin::riwayatPendaftar_sktm');
 $routes->get('/pendaftar-sktm/(:num)', 'Admin::detailPendaftarSktm/$1');
 $routes->get('/print-surat/(:num)', 'Admin::printSurat/$1');
 $routes->get('/lengkapi-profil-desa', 'Admin::setProfilDesa');
@@ -66,6 +68,9 @@ $routes->get('/data-penduduk', 'Admin::dataPenduduk');
 $routes->get('/status-kawin', 'Admin::dataKawin');
 $routes->get('/data-agama', 'Admin::dataAgama');
 $routes->get('/data-kelompok-usia', 'Admin::dataKelompokUsia');
+$routes->get('/set-aparatur-desa', 'Admin::aparaturDesa');
+$routes->get('/detail-aparat/(:num)', 'Admin::detailAparat/$1');
+$routes->get('/profil', 'Admin::profil');
 
 
 

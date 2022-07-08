@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\AdminModel;
+use App\Models\AparaturDesaModel;
 use App\Models\BeritaModel;
 use App\Models\dataAgamaModel;
 use App\Models\dataDesaModel;
@@ -11,12 +13,15 @@ use App\Models\KategoriModel;
 use App\Models\KelompokUsiaModel;
 use App\Models\PendaftarSktm;
 use App\Models\ProfilDesaModel;
+use Dompdf\Dompdf;
 
 class Admin extends BaseController
 {
+    protected $AdminModel;
     protected $kategori;
     protected $BeritaModel;
     protected $profilDesa;
+    protected $aparatDesa;
     protected $dataDesa;
     protected $dataKawin;
     protected $dataKelompokUsia;
@@ -25,9 +30,11 @@ class Admin extends BaseController
     protected $pendaftarSktm;
     public function __construct()
     {
+        $this->AdminModel = new AdminModel();
         $this->kategori = new KategoriModel();
         $this->BeritaModel = new BeritaModel();
         $this->profilDesa = new ProfilDesaModel();
+        $this->aparatDesa = new AparaturDesaModel();
         $this->dataDesa = new dataDesaModel();
         $this->dataKelompokUsia = new KelompokUsiaModel();
         $this->dataKawin = new dataStatusPerkawinan();
@@ -41,7 +48,12 @@ class Admin extends BaseController
         $data = [
             'title' => "Beranda",
             'jumlahBerita' => $this->BeritaModel->findAll(),
-            'jumlahPendaftarSktm' => $this->pendaftarSktm->findAll()
+            'jumlahPendaftarSktm' => $this->pendaftarSktm->findAll(),
+            'dataDesa' => $this->dataDesa->findAll(),
+            'dataPenduduk' => $this->dataPendudukModel->findAll(),
+            'dataStatusKawin' => $this->dataKawin->findAll(),
+            'dataAgama' => $this->dataAgama->findAll(),
+            'dataKelomUsia' => $this->dataKelompokUsia->findAll()
         ];
         return view('admin/beranda', $data);
     }
@@ -137,27 +149,44 @@ class Admin extends BaseController
     {
         $data = [
             'title' => 'Daftar Pendaftar SKTM',
-            'pendaftar' => $this->pendaftarSktm->db->query("SELECT  * FROM pendaftar_sktm ORDER BY id DESC")->getResultArray()
+            'pendaftar' => $this->pendaftarSktm->db->query("SELECT  * FROM pendaftar_sktm WHERE status_surat = 'proses' ORDER BY id DESC")->getResultArray(),
+            'selesai' => $this->pendaftarSktm->db->query("SELECT  * FROM pendaftar_sktm WHERE status_surat = 'selesai' ORDER BY id DESC")->getResultArray()
         ];
 
         return view('admin/pendaftarSktm', $data);
     }
 
+    public function riwayatPendaftar_sktm($data = null)
+    {
+        $data = [
+            'title' => 'Riwayat Pendaftar SKTM',
+            'pendaftar' => $this->pendaftarSktm->db->query("SELECT  * FROM pendaftar_sktm WHERE status_surat = 'selesai' ORDER BY id DESC")->getResultArray()
+        ];
+
+        return view('admin/riwayatPendaftar_sktm', $data);
+    }
+
     public function printSurat($data = null)
     {
+        $dompdf = new Dompdf();
         $data = [
             'title' => 'Print Surat',
             'pendaftar' => $this->pendaftarSktm->find($data)
         ];
 
-        return view('admin/printSurat', $data);
+        $html = view('admin/printSurat', $data);
+        $dompdf->setPaper("A4", "potrait");
+        $dompdf->load_html($html);
+        $dompdf->render();
+        $dompdf->stream("Surat Keterangan Tidak Mampu.pdf", array("Attachment" => false));
     }
 
     public function suratSelesai($data = null)
     {
         $id = $this->request->getPost('id');
         $this->pendaftarSktm->update($id, [
-            'status_surat' => "selesai"
+            'status_surat' => "selesai",
+            'tgl_selesai' => date("d-m-Y")
         ]);
 
         $pesan = [
@@ -296,5 +325,37 @@ class Admin extends BaseController
         ];
 
         echo json_encode(view('admin/table/tableDataKelomUsia', $data));
+    }
+
+    public function aparaturDesa()
+    {
+        $data = [
+            'title' => "Aparatur Desa",
+            'aparatDesa' => $this->aparatDesa->findAll()
+        ];
+
+        return view("admin/aparaturDesa", $data);
+    }
+
+    public function detailAparat($id)
+    {
+        $data = [
+            'title' => "Rincian Aparatur Desa",
+            'aparatDesa' => $this->aparatDesa->find($id)
+        ];
+
+        return view("admin/detailAparat", $data);
+    }
+
+    public function profil()
+    {
+        $email = session()->get('email');
+        // dd($email);
+        $data = [
+            'title' => "Profil",
+            'data' => $this->AdminModel->getWhere(['email' => $email])->getRowArray()
+        ];
+        // dd(session()->get());
+        return view('admin/profil', $data);
     }
 }

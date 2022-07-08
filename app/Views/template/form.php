@@ -74,9 +74,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="<?= base_url(""); ?>" class="nav-item nav-link active">Beranda</a>
+                    <a href="<?= base_url(""); ?>" class="nav-item nav-link ">Beranda</a>
                     <a href="#about" class="nav-item nav-link">Tentang kami</a>
-                    <a href="<?= base_url('layanan'); ?>" class="nav-item nav-link">Layanan Online</a>
+                    <a href="<?= base_url('layanan'); ?>" class="nav-item nav-link active">Layanan Online</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Blog</a>
                         <div class="dropdown-menu m-0">
@@ -325,6 +325,7 @@
                                     <div class="card-body">
                                         <p>` + data.data.nama + `</p>
                                         <p>` + data.data.status_surat + `</p>
+                                        <p>` + data.pesan + `</p>
                                     </div>
                                 </div>
                             `)

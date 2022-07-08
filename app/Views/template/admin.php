@@ -83,6 +83,7 @@
                         <a class="collapse-item" href="<?= base_url("data-desa"); ?>">Data Desa</a>
                         <a class="collapse-item" href="<?= base_url("sejarah-desa"); ?>">Sejarah Desa</a>
                         <a class="collapse-item" href="<?= base_url("set-visi-misi"); ?>">Visi & Misi Desa</a>
+                        <a class="collapse-item" href="<?= base_url("set-aparatur-desa"); ?>">Aparatur Desa</a>
                     </div>
                 </div>
             </li>
@@ -223,17 +224,9 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="<?= base_url('profil'); ?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item logout" href="#" id="logout">
@@ -249,7 +242,7 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="margin-bottom: 10%;">
 
                     <!-- Page Heading -->
                     <?= $this->renderSection('content'); ?>

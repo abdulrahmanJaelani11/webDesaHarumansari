@@ -4,15 +4,26 @@
     .form-group {
         margin-top: 30px;
     }
+
+    @media screen and (max-width: 400px) {
+        .col-img {
+            width: 40%;
+        }
+    }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <div class="row justify-content-center">
-    <div class="col-md-5 wow zoomIn" style="margin-top: 10%;" data-wow-delay="0.3s">
+    <div class="col-md-5 cardForm" style="margin-top: 10%;" data-wow-delay="0.3s">
         <div class="bg-white rounded shadow position-relative" style="z-index: 1;">
             <div class="border-bottom py-4 px-4 mb-4">
-                <h3 class="text-primary mb-1">Login</h3>
-                <small class="text-uppercase">Selamat Datang</small>
+                <div class="row justify-content-between">
+                    <div class="col-6">
+                        <h3 class="text-primary mb-1">Login</h3>
+                        <small class="text-uppercase">Selamat Datang</small>
+                    </div>
+                    <div class="col-3 col-img"><img src="<?= base_url('assetsAdmin'); ?>/img/logo.png" alt="Harumansari" class="img-fluid"></div>
+                </div>
             </div>
             <div class="p-4 pt-0">
                 <form action="Proses/prosesLogin" method="post">
@@ -34,6 +45,11 @@
                     </div>
                 </form>
             </div>
+            <!-- <div class="row pb-3">
+                <div class="col text-center">
+                    <a href="<?= base_url('lupa-password'); ?>">Lupa Password ?</a>
+                </div>
+            </div> -->
         </div>
     </div>
 </div>
