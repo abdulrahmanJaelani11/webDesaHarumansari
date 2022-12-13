@@ -48,7 +48,8 @@ class Admin extends BaseController
         $data = [
             'title' => "Beranda",
             'jumlahBerita' => $this->BeritaModel->findAll(),
-            'jumlahPendaftarSktm' => $this->pendaftarSktm->findAll(),
+            'jumlahPendaftarSktmAktif' => $this->pendaftarSktm->findAll(),
+            'jumlahPendaftarSktm' => $this->pendaftarSktm->where('status', null)->findAll(),
             'dataDesa' => $this->dataDesa->findAll(),
             'dataPenduduk' => $this->dataPendudukModel->findAll(),
             'dataStatusKawin' => $this->dataKawin->findAll(),
@@ -357,5 +358,27 @@ class Admin extends BaseController
         ];
         // dd(session()->get());
         return view('admin/profil', $data);
+    }
+
+    public function getDataDesaOne($id)
+    {
+        $data = $this->dataDesa->getOne($id);
+        echo json_encode($data);
+    }
+
+    public function editDataDesa()
+    {
+        $data = $this->request->getVar();
+        $this->dataDesa->update($data['id'], [
+            'atribut' => $data['atribut'],
+            'jumlah' => $data['jumlah']
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => 'Berhasil Mengedit data'
+        ];
+
+        echo json_encode($pesan);
     }
 }

@@ -143,11 +143,11 @@
                 <p>Harumansari <?= date("d M y"); ?></p>
             </div>
         </div>
-        <div class="row text-center mt-4 justify-content-between tanda_tangan">
+        <!-- <div class="row text-center mt-4 justify-content-between tanda_tangan">
             <p>coba</p>
             <p>coba</p>
             <p>coba</p>
-        </div>
+        </div> -->
     </div>
 
 

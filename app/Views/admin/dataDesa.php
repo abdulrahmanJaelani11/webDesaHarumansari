@@ -38,6 +38,35 @@
         <div class="getTable"></div>
     </div>
 </div>
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data Desa</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?= base_url("Admin/editDataDesa"); ?>" method="post" class="formEdit">
+                    <div class="form-group">
+                        <label for="atribut">Atribut</label>
+                        <input type="hidden" id="id_for_edit" name="id">
+                        <input type="text" name="atribut" id="atribut" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="jumlah">Jumlah</label>
+                        <input type="number" name="jumlah" id="jumlahAtribut" class="form-control">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="simpan" class="btn btnFormEdit btn-primary btn-sm"> Simpan </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <?= $this->endSection(); ?>
 
 <?= $this->section('script'); ?>
@@ -50,7 +79,6 @@
             type: "post",
             dataType: 'json',
             success: function(data) {
-                console.log(data)
                 $(".getTable").html(data)
                 $(".btnHapus").click(function(e) {
                     e.preventDefault()
@@ -88,6 +116,19 @@
                 })
             }
         });
+    }
+
+    function getDataDesa(id) {
+        $.ajax({
+            url: "<?= base_url('Admin/getDataDesaOne'); ?>" + '/' + id,
+            method: "POST",
+            dataType: 'json',
+            success: function(data) {
+                $("#id_for_edit").val(data.id)
+                $("#atribut").val(data.atribut)
+                $("#jumlahAtribut").val(data.jumlah)
+            }
+        })
     }
 
     function resetForm() {
@@ -128,6 +169,25 @@
                     }
                 }
             });
+        })
+
+        $(".btnFormEdit").click(function(e) {
+            e.preventDefault()
+
+            $.ajax({
+                url: "<?= base_url("Admin/editDataDesa"); ?>",
+                method: "POST",
+                data: $(".formEdit").serialize(),
+                dataType: 'json',
+                success: function(data) {
+                    Swal.fire(
+                        'Berhasil',
+                        data.pesan,
+                        'success'
+                    )
+                    getTable()
+                }
+            })
         })
 
     })

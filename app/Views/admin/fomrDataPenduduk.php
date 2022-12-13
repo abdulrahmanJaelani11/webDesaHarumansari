@@ -32,7 +32,38 @@
             <div class="card-body">
                 <h3><?= $title; ?></h3>
                 <hr>
+                <a class="btn btn-sm btn-primary mb-3" href="#" data-toggle="modal" data-target="#logoutModal">
+                    Tambah Data
+                </a>
                 <div class="getTable"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?= base_url("Proses/tambahDataPenduduk"); ?>" method="post" class="formTambah">
+                    <div class="form-group">
+                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                        <input type="text" name="jenis_kelamin" id="jenis_kelamin" class="form-control" placeholder="Masukan Jenis Kelamin">
+                    </div>
+                    <div class="form-group">
+                        <label for="jumlah">Jumlah</label>
+                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Masukan Jumlah">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="simpan" class="btn btn-sm btn-primary btnTambah"> Simpan </button>
             </div>
         </div>
     </div>
@@ -80,7 +111,6 @@
                 data: $(this).serialize(),
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data)
                     if (data.status == 200) {
                         getTable()
                         resetForm()
@@ -102,10 +132,6 @@
             });
         })
         getTable()
-        $(".btnTambah").click(function() {
-            $(".form").slideToggle(500)
-            $(".bg-blur").fadeToggle(1000)
-        })
         $(".batal").click(function() {
             $(".form").slideToggle(500)
             $(".bg-blur").fadeToggle(1000)
@@ -113,6 +139,25 @@
         $(".batal_ubah").click(function() {
             $(".formUbah").slideToggle(500)
             $(".bg-blur").fadeToggle(1000)
+        })
+
+        $(".btnTambah").click(function() {
+            $.ajax({
+                url: $(".formTambah").attr('action'),
+                method: $(".formTambah").attr('method'),
+                data: $(".formTambah").serialize(),
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 200) {
+                        Swal.fire(
+                            'Berhasil',
+                            data.pesan,
+                            'success'
+                        )
+                        getTable()
+                    }
+                }
+            })
         })
     })
 </script>

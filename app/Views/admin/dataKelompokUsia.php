@@ -8,7 +8,7 @@
             <div class="card-body">
                 <h3>Ubah Data</h3>
                 <hr>
-                <form action="<?= base_url("Proses/updateDataKelomUsia"); ?>" method="post">
+                <form action="<?= base_url("Proses/updateDataKelomUsia"); ?>" method="post" class="formEdit">
                     <div class="form-group">
                         <input type="hidden" name="id" id="id" value="">
                     </div>
@@ -32,7 +32,37 @@
             <div class="card-body">
                 <h3><?= $title; ?></h3>
                 <hr>
+                <button type="submit" class="btn btn-sm btn-primary mb-3" data-toggle="modal" data-target="#tambahDataModal"> Tambah Data </button>
                 <div class="getTable"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kelompok Usia</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?= base_url("Admin/editDataDesa"); ?>" method="post" class="tambahDataKelomUsia">
+                    <div class="form-group">
+                        <label for="atribut">Usia</label>
+                        <input type="hidden" id="id" name="id">
+                        <input type="text" name="usia" id="usia" class="form-control" placeholder="Masukan Usia">
+                    </div>
+                    <div class="form-group">
+                        <label for="jumlah">Jumlah</label>
+                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Masukan Jumlah">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="simpan" class="btn btnFormEdit btn-primary btn-sm"> Simpan </button>
+                </form>
             </div>
         </div>
     </div>
@@ -72,7 +102,7 @@
         $('input').click(function() {
             $(this).removeClass('is-invalid')
         })
-        $("form").submit(function(e) {
+        $(".formEdit").submit(function(e) {
             e.preventDefault()
             $.ajax({
                 url: $(this).attr('action'),
@@ -113,6 +143,20 @@
         $(".batal_ubah").click(function() {
             $(".formUbah").slideToggle(500)
             $(".bg-blur").fadeToggle(1000)
+        })
+
+        $(".tambahDataKelomUsia").submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "<?= base_url('Proses/simpanDataKelompokUsia'); ?>",
+                method: 'post',
+                dataType: 'json',
+                data: $(".tambahDataKelomUsia").serialize(),
+                success: function(data) {
+                    console.log(data)
+                }
+            })
         })
     })
 </script>

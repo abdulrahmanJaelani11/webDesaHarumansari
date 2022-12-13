@@ -837,4 +837,37 @@ class Proses extends BaseController
             }
         }
     }
+
+    public function tambahDataPenduduk()
+    {
+        $data = $this->request->getVar();
+
+        $this->dataPenduduk->save([
+            'jk' => htmlspecialchars($data['jenis_kelamin']),
+            'jumlah' => htmlspecialchars($data['jumlah'])
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => 'Berhasil Menambahkan data penduduk'
+        ];
+
+        echo json_encode($pesan);
+    }
+
+    public function simpanDataKelompokUsia()
+    {
+        $data = $this->request->getVar();
+        $this->dataKelompokUsia->save([
+            'usia' => htmlspecialchars($data['usia']),
+            'jumlah' => htmlspecialchars($data['jumlah'])
+        ]);
+
+        $pesan = [
+            'status' => 200,
+            'pesan' => "Berhasil Menambahkan Data Kelompok Usia"
+        ];
+
+        echo json_encode($pesan);
+    }
 }

@@ -8,7 +8,7 @@
                 <th>No</th>
                 <th>Usia</th>
                 <th>Jumlah</th>
-                <th>Opsi</th>
+                <th style="width: 70px;">Opsi</th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +19,9 @@
                     <td><?= $row['usia']; ?></td>
                     <td><?= $row['jumlah']; ?></td>
                     <td>
-                        <button type="submit" name="ubah" class="btn btn-sm btn-block btn-primary btnUbah" value="<?= $row['jumlah']; ?>" id="<?= $row['id']; ?>"> Ubah </button>
+                        <button type="submit" name="ubah" class="btn btn-sm btn-block btn-primary btnUbah" value="<?= $row['jumlah']; ?>" id="<?= $row['id']; ?>">
+                            <i class="fa fa-fw fa-edit"></i>
+                        </button>
                     </td>
                 </tr>
             <?php endforeach; ?>

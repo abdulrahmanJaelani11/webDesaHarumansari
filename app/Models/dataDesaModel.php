@@ -14,4 +14,9 @@ class dataDesaModel extends Model
     {
         return $this->findAll();
     }
+
+    public function getOne($id)
+    {
+        return $this->find($id);
+    }
 }
