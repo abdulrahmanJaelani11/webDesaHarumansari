@@ -482,9 +482,19 @@ class Proses extends BaseController
             echo json_encode($data);
         } else {
             $total = $data[0]['jumlah'] + $data[1]['jumlah'];
+            $atribut = array();
+            $jumlah = array();
+            $total = 0;
+            for ($i = 0; $i < count($data); $i++) {
+                array_push($atribut, $data[$i]['jk']);
+                array_push($jumlah, $data[$i]['jumlah']);
+                $total += $data[$i]['jumlah'];
+            }
+            $atribut[] = 'total';
+            $jumlah[] = "$total";
             $dataArray = [
-                'atribut' => [$data[0]['jk'], $data[1]['jk'], 'total'],
-                'jumlah' => [$data[0]['jumlah'], $data[1]['jumlah'], $total],
+                'atribut' => $atribut,
+                'jumlah' => $jumlah,
             ];
 
             echo json_encode($dataArray);

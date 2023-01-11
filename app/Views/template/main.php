@@ -40,7 +40,6 @@
     </div>
 
     <!-- myJS -->
-    <?= $this->renderSection("script"); ?>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -54,6 +53,7 @@
     <!-- Template Javascript -->
     <script src="<?= base_url("assets"); ?>/js/main.js"></script>
     <script src="<?= base_url("assets"); ?>/js/jquery.js"></script>
+    <?= $this->renderSection("script"); ?>
 </body>
 
 </html>

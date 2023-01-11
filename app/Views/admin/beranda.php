@@ -62,134 +62,72 @@
 
 <div class="row">
     <div class="col-12">
-        <h3 class="font-weight-bold text-gray-800">Data Desa</h3>
-        <hr>
-    </div>
-    <?php foreach ($dataDesa as $row) : ?>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <a href="<?= base_url('data-desa'); ?>" style="text-decoration: none;">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    <?= $row['atribut']; ?></div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $row['jumlah']; ?> Orang</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="font-weight-bold text-gray-800">Data Desa</h3>
+                <hr>
+                <canvas id="myChart"></canvas>
+            </div>
         </div>
-    <?php endforeach; ?>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-12">
-        <h3 class="font-weight-bold text-gray-800">Data Penduduk</h3>
-        <hr>
-    </div>
-    <?php foreach ($dataPenduduk as $row) : ?>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <a href="<?= base_url('data-penduduk'); ?>" style="text-decoration: none;">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    <?= $row['jk']; ?></div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $row['jumlah']; ?> Orang</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
+<div class="row mt-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="font-weight-bold text-gray-800">Data Penduduk</h3>
+                <hr>
+                <canvas id="dataPenduduk"></canvas>
+            </div>
         </div>
-    <?php endforeach; ?>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="font-weight-bold text-gray-800">Data Status Perkawinan</h3>
+                <hr>
+                <canvas id="dataStatusPerkawinan"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-12">
-        <h3 class="font-weight-bold text-gray-800">Data Status Perkawinan</h3>
-        <hr>
-    </div>
-    <?php foreach ($dataStatusKawin as $row) : ?>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <a href="<?= base_url('status-kawin'); ?>" style="text-decoration: none;">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    <?= $row['status_kawin']; ?></div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $row['jumlah']; ?> Orang</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
+
+<div class="row mt-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="font-weight-bold text-gray-800">Data Agama</h3>
+                <hr>
+                <canvas id="dataAgama"></canvas>
+            </div>
         </div>
-    <?php endforeach; ?>
-</div>
-<div class="row">
-    <div class="col-12">
-        <h3 class="font-weight-bold text-gray-800">Data Agama</h3>
-        <hr>
     </div>
-    <?php foreach ($dataAgama as $row) : ?>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <a href="<?= base_url('data-agama'); ?>" style="text-decoration: none;">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    <?= $row['agama']; ?></div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $row['jumlah']; ?> Orang</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    <?php endforeach; ?>
 </div>
-<div class="row">
+
+<div class="row mt-3">
     <div class="col-12">
-        <h3 class="font-weight-bold text-gray-800">Data Kelompok Usia</h3>
-        <hr>
-    </div>
-    <?php foreach ($dataKelomUsia as $row) : ?>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <a href="<?= base_url('data-kelompok-usia'); ?>" style="text-decoration: none;">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    <?= $row['usia']; ?></div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $row['jumlah']; ?> Orang</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="font-weight-bold text-gray-800">Data Kelompok Usia</h3>
+                <hr>
+                <canvas id="dataKelompokUsia"></canvas>
+            </div>
         </div>
-    <?php endforeach; ?>
+    </div>
 </div>
+<?= $this->endSection(); ?>
+
+<?= $this->section('script'); ?>
+<script src="<?= base_url("assets"); ?>/js/chart.js"></script>
+<script src="<?= base_url("assets"); ?>/js/beranda/beranda.js"></script>
+<script src="<?= base_url("assets"); ?>/js/jquery.js"></script>
+<script>
+    dataDesa("<?= base_url("proses/getDataDesa"); ?>")
+    dataPenduduk('<?= base_url("proses/getDataPenduduk"); ?>')
+    dataStatusKawin("<?= base_url("proses/getDataStatusKawin"); ?>")
+    dataAgama("<?= base_url("proses/getDataAgama"); ?>")
+    dataKelomUsia("<?= base_url("proses/getDataKelomUsia"); ?>")
+</script>
 <?= $this->endSection(); ?>
